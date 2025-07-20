@@ -203,4 +203,76 @@ describe('useAuth Hook', () => {
 
     expect(result.current.error).toBe(errorMessage);
   });
+
+  describe('Logout Functionality', () => {
+    test('should call Supabase signOut when logout is triggered', async () => {
+      const { result } = renderHook(() => useAuth());
+      
+      await waitFor(() => {
+        expect(result.current.loading).toBe(false);
+      });
+
+      // Call signOut
+      await act(async () => {
+        const response = await result.current.signOut();
+        expect(response).toEqual({ success: true });
+      });
+
+      expect(mockSignOut).toHaveBeenCalled();
+    });
+
+    test('should handle logout when already signed out', async () => {
+      const { result } = renderHook(() => useAuth());
+      
+      await waitFor(() => {
+        expect(result.current.loading).toBe(false);
+      });
+
+      // User should already be null
+      expect(result.current.user).toBe(null);
+
+      // Logout should still work without errors
+      await act(async () => {
+        const response = await result.current.signOut();
+        expect(response).toEqual({ success: true });
+      });
+
+      expect(mockSignOut).toHaveBeenCalled();
+      expect(result.current.user).toBe(null);
+    });
+
+    test('should clear error state when logout succeeds', async () => {
+      const { result } = renderHook(() => useAuth());
+      
+      await waitFor(() => {
+        expect(result.current.loading).toBe(false);
+      });
+
+      // Simulate successful logout clearing error
+      await act(async () => {
+        const response = await result.current.signOut();
+        expect(response).toEqual({ success: true });
+      });
+
+      expect(result.current.error).toBe(null);
+    });
+
+
+    test('should handle SIGNED_OUT auth state change event', async () => {
+      const { result } = renderHook(() => useAuth());
+      
+      await waitFor(() => {
+        expect(result.current.loading).toBe(false);
+      });
+
+      // Simulate SIGNED_OUT event
+      await act(async () => {
+        const mockCallback = mockOnAuthStateChange.mock.calls[0][0];
+        mockCallback('SIGNED_OUT', null);
+      });
+
+      expect(result.current.user).toBe(null);
+      expect(result.current.isAuthenticated).toBe(false);
+    });
+  });
 });

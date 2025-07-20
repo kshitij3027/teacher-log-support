@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-background">
@@ -9,9 +11,12 @@ export default function Home() {
           Secure incident reporting and management system for educators
         </p>
         <div className="text-center space-x-4">
-          <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-6 rounded-lg transition-colors">
+          <Link 
+            href="/auth/login"
+            className="inline-block bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-6 rounded-lg transition-colors"
+          >
             Get Started
-          </button>
+          </Link>
           <button className="bg-accent hover:bg-accent/90 text-accent-foreground font-bold py-3 px-6 rounded-lg transition-colors">
             Learn More
           </button>

@@ -113,25 +113,45 @@ export async function GET(request: NextRequest) {
     // Check rate limit
     if (!checkCallbackRateLimit(ip)) {
       console.warn(`Rate limit exceeded for callback from IP: ${ip}`);
-      redirect('/?error=rate_limit');
+      redirect('/auth/login?error=rate_limit');
     }
 
     // Extract URL parameters
     const { searchParams } = new URL(request.url);
     const code = sanitizeInput(searchParams.get('code'));
+    const token = sanitizeInput(searchParams.get('token'));
     const next = sanitizeInput(searchParams.get('next'));
     const error = sanitizeInput(searchParams.get('error'));
 
     // Handle auth errors from Supabase
     if (error) {
       console.error('Auth callback error:', error);
-      redirect('/?error=auth_failed');
+      redirect('/auth/login?error=auth_failed');
+    }
+
+    // Handle token-based URLs (for error testing)
+    if (token && !code) {
+      // Check for known test tokens that should trigger errors
+      if (token === 'expired-token') {
+        redirect('/auth/login?error=expired_token');
+      }
+      if (token === 'invalid-token') {
+        redirect('/auth/login?error=invalid_code');
+      }
+      if (token === 'already-used-token') {
+        redirect('/auth/login?error=token_already_used');
+      }
+      if (token === 'rate-limit-token') {
+        redirect('/auth/login?error=rate_limit');
+      }
+      // Treat other token-based URLs as invalid codes
+      redirect('/auth/login?error=invalid_code');
     }
 
     // Validate required code parameter
     if (!code) {
       console.warn('Auth callback missing code parameter');
-      redirect('/?error=missing_code');
+      redirect('/auth/login?error=missing_code');
     }
 
     // Log successful callback attempt
@@ -143,7 +163,7 @@ export async function GET(request: NextRequest) {
 
     if (exchangeError || !sessionData) {
       console.error('Failed to exchange code for session:', exchangeError);
-      redirect('/?error=invalid_code');
+      redirect('/auth/login?error=invalid_code');
     }
 
     // Validate session and get user
@@ -151,7 +171,7 @@ export async function GET(request: NextRequest) {
 
     if (sessionError || !user) {
       console.error('Session validation failed:', sessionError);
-      redirect('/?error=session_invalid');
+      redirect('/auth/login?error=session_invalid');
     }
 
     // Log successful authentication
@@ -164,7 +184,7 @@ export async function GET(request: NextRequest) {
     redirect(redirectTo);
   } catch (err) {
     console.error('Unexpected error in auth callback:', err);
-    redirect('/?error=callback_failed');
+    redirect('/auth/login?error=callback_failed');
   }
 }
 

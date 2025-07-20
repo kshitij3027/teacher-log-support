@@ -15,6 +15,10 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:e2e": "cd e2e && playwright test",
+    "test:e2e:ui": "cd e2e && playwright test --ui",
+    "test:e2e:headed": "cd e2e && playwright test --headed",
+    "test:e2e:debug": "cd e2e && playwright test --debug",
     "check-all": "npm run type-check && npm run lint && npm run format:check && npm run test"
   },
   "keywords": [
@@ -49,6 +53,8 @@
     "zod": "^4.0.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "@tailwindcss/postcss": "^4.1.11",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",

@@ -128,16 +128,18 @@ export function useAuth(): UseAuthReturn {
       if (signOutError) {
         console.error('Sign out error:', signOutError);
         setError(signOutError.message);
+        // Don't clear user state on logout failure
         return { error: signOutError.message };
       }
 
-      // Clear user state immediately
+      // Clear user state only on successful logout
       setUser(null);
       return { success: true };
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to sign out';
       console.error('Sign out unexpected error:', err);
       setError(errorMessage);
+      // Don't clear user state on network/unexpected errors
       return { error: errorMessage };
     } finally {
       setLoading(false);
