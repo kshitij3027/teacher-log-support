@@ -9,11 +9,11 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jsdom',
-  moduleNameMapping: {
+  moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(isows|@supabase)/)',
+    'node_modules/(?!(isows|@supabase|@hookform)/)',
   ],
   collectCoverageFrom: [
     'lib/**/*.{ts,tsx}',
@@ -26,6 +26,10 @@ const customJestConfig = {
   testMatch: [
     '<rootDir>/**/__tests__/**/*.{ts,tsx}',
     '<rootDir>/**/*.{test,spec}.{ts,tsx}',
+  ],
+  testPathIgnorePatterns: [
+    '<rootDir>/e2e/',
+    '<rootDir>/node_modules/',
   ],
   setupFiles: ['<rootDir>/jest.env.js'],
 };

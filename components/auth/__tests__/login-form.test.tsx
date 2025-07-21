@@ -2,6 +2,68 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { LoginForm } from '../login-form';
 
+// Mock Lucide React icons
+jest.mock('lucide-react', () => ({
+  Loader2: ({ className }: { className?: string }) => <div data-testid="loader-icon" className={className} />,
+  Mail: ({ className }: { className?: string }) => <div data-testid="mail-icon" className={className} />,
+  CheckCircle: ({ className }: { className?: string }) => <div data-testid="check-icon" className={className} />,
+  ArrowLeft: ({ className }: { className?: string }) => <div data-testid="arrow-left-icon" className={className} />,
+}));
+
+// Mock UI components
+jest.mock('../../ui/button', () => ({
+  Button: ({ children, onClick, disabled, type, className }: any) => (
+    <button 
+      onClick={onClick} 
+      disabled={disabled} 
+      type={type} 
+      className={className}
+      data-testid="button"
+    >
+      {children}
+    </button>
+  ),
+}));
+
+jest.mock('../../ui/input', () => ({
+  Input: ({ placeholder, type, required, disabled, className, ...props }: any) => (
+    <input 
+      placeholder={placeholder}
+      type={type}
+      required={required}
+      disabled={disabled}
+      className={className}
+      data-testid="input"
+      {...props}
+    />
+  ),
+}));
+
+// Create a more sophisticated form mock that doesn't create nested forms
+const mockField = {
+  name: 'email',
+  value: '',
+  onChange: jest.fn(),
+  onBlur: jest.fn(),
+  ref: jest.fn(),
+};
+
+jest.mock('../../ui/form', () => ({
+  Form: ({ children }: any) => (
+    <div data-testid="form-wrapper">
+      {children}
+    </div>
+  ),
+  FormControl: ({ children }: any) => <div data-testid="form-control">{children}</div>,
+  FormField: ({ render, control, name }: any) => {
+    const field = { ...mockField, name };
+    return render({ field, fieldState: {}, formState: {} });
+  },
+  FormItem: ({ children }: any) => <div data-testid="form-item">{children}</div>,
+  FormLabel: ({ children }: any) => <label data-testid="form-label">{children}</label>,
+  FormMessage: ({ children }: any) => <div data-testid="form-message">{children}</div>,
+}));
+
 // Mock the Supabase client
 const mockSignInWithOtp = jest.fn();
 jest.mock('../../../lib/supabase/client', () => ({
