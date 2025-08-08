@@ -36,3 +36,6 @@ export function createServerClient() {
     },
   });
 }
+
+// Provide a named alias to align with existing import patterns and tests
+export const createClient = createServerClient;

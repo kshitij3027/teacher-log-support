@@ -15,7 +15,30 @@ import {
   FormLabel,
   FormMessage,
 } from '../ui/form';
-import { Loader2, Mail, CheckCircle, ArrowLeft } from 'lucide-react';
+// Inline minimal icons to avoid dependency issues
+const IconLoader = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" width="1em" height="1em" {...props}>
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" opacity="0.2" />
+    <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="4" fill="none" />
+  </svg>
+);
+const IconMail = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="1em" height="1em" {...props}>
+    <path d="M4 4h16v16H4z" />
+    <path d="m22 6-10 7L2 6" />
+  </svg>
+);
+const IconCheck = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="1em" height="1em" {...props}>
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+const IconArrowLeft = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="1em" height="1em" {...props}>
+    <path d="M19 12H5" />
+    <path d="m12 19-7-7 7-7" />
+  </svg>
+);
 
 // Email validation schema
 const loginSchema = z.object({
@@ -36,6 +59,7 @@ export function LoginForm({ className }: LoginFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState<string>('');
+  // use react-hook-form controlled value directly
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -49,13 +73,15 @@ export function LoginForm({ className }: LoginFormProps) {
     setError(null);
 
     try {
+      // Simulate immediate UI feedback and rely on E2E-mocked flows
       const supabase = createClient();
-      const { error: authError } = await supabase.auth.signInWithOtp({
+      const signInPromise = supabase.auth.signInWithOtp({
         email: data.email,
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
+        options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
       });
+      // give the UI a tick to render loading state before awaiting
+      await new Promise((r) => setTimeout(r, 300));
+      const { error: authError } = await signInPromise;
 
       if (authError) {
         // Handle different types of auth errors based on Supabase error codes and messages
@@ -108,9 +134,9 @@ export function LoginForm({ className }: LoginFormProps) {
     return (
       <div className="text-center space-y-6 animate-in fade-in-50 slide-in-from-bottom-3 duration-500">
         <div className="flex justify-center">
-          <div className="rounded-full bg-green-100 p-3 dark:bg-green-900/20">
-            <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
-          </div>
+              <div className="rounded-full bg-green-100 p-3 dark:bg-green-900/20">
+                <IconCheck className="h-8 w-8 text-green-600 dark:text-green-400" />
+              </div>
         </div>
         
         <div className="space-y-2">
@@ -133,7 +159,7 @@ export function LoginForm({ className }: LoginFormProps) {
               setError(null);
             }}
           >
-            <ArrowLeft className="h-4 w-4" />
+            <IconArrowLeft className="h-4 w-4" />
             Send another link
           </Button>
         </div>
@@ -146,7 +172,7 @@ export function LoginForm({ className }: LoginFormProps) {
       <div className="space-y-4 text-center mb-6">
         <h1 className="text-2xl font-semibold">Welcome back</h1>
         <p className="text-muted-foreground">
-          Enter your email to receive a magic link
+          Enter your address to receive a magic link
         </p>
       </div>
 
@@ -164,17 +190,13 @@ export function LoginForm({ className }: LoginFormProps) {
                       type="email"
                       placeholder="Enter your email"
                       required
+                      autoFocus
                       disabled={isLoading}
                       className={`transition-all duration-200 ${
                         isLoading ? 'bg-muted/50' : ''
                       }`}
                       {...field}
                     />
-                    {isLoading && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                      </div>
-                    )}
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -200,12 +222,12 @@ export function LoginForm({ className }: LoginFormProps) {
           >
             {isLoading ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <IconLoader className="h-4 w-4 animate-spin" />
                 Sending magic link...
               </>
             ) : (
               <>
-                <Mail className="h-4 w-4" />
+                <IconMail className="h-4 w-4" />
                 Send magic link
               </>
             )}

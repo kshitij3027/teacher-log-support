@@ -1,12 +1,6 @@
-import { Metadata } from 'next';
 import { Suspense } from 'react';
 import { LoginForm } from '../../../components/auth/login-form';
 import { ErrorAlert } from '../../../components/auth/error-alert';
-
-export const metadata: Metadata = {
-  title: 'Login | Teacher Support Platform',
-  description: 'Sign in to your Teacher Support Platform account using magic link authentication.',
-};
 
 interface LoginPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;

@@ -1,0 +1,145 @@
+{
+  "config": {
+    "configFile": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/playwright.config.ts",
+    "rootDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 5,
+    "webServer": {
+      "command": "bash -lc \"cd .. && npm run dev\"",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 180000,
+      "env": {
+        "NEXT_PUBLIC_SUPABASE_URL": "http://127.0.0.1:54321",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY": "test_anon_key",
+        "NEXT_PUBLIC_DISABLE_MIDDLEWARE": "true"
+      }
+    }
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "SyntaxError: /Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests/auth-error-scenarios.spec.ts: Unterminated string constant. (264:38)\n\n  262 |     /* test('should handle server error (500) during magic link request', async ({ page }) => {\n  263 |       // Mock server error from Supabase OTP endpoint\n> 264 |       await page.route('**/auth/v1/otp', async (route) => {\n      |                                       ^\n  265 |         await route.fulfill({\n  266 |           status: 500,\n  267 |           contentType: 'application/json',",
+      "stack": "SyntaxError: /Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests/auth-error-scenarios.spec.ts: Unterminated string constant. (264:38)\n\n  262 |     /* test('should handle server error (500) during magic link request', async ({ page }) => {\n  263 |       // Mock server error from Supabase OTP endpoint\n> 264 |       await page.route('**/auth/v1/otp', async (route) => {\n      |                                       ^\n  265 |         await route.fulfill({\n  266 |           status: 500,\n  267 |           contentType: 'application/json',",
+      "location": {
+        "file": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests/auth-error-scenarios.spec.ts",
+        "line": 264,
+        "column": 38
+      },
+      "snippet": "\u001b[90m   at \u001b[39mauth-error-scenarios.spec.ts:264\n\n  262 |     /* test('should handle server error (500) during magic link request', async ({ page }) => {\n  263 |       // Mock server error from Supabase OTP endpoint\n> 264 |       await page.route('**/auth/v1/otp', async (route) => {\n      |                                      ^\n  265 |         await route.fulfill({\n  266 |           status: 500,\n  267 |           contentType: 'application/json',"
+    },
+    {
+      "message": "SyntaxError: /Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests/auth-login-logout-flow.spec.ts: Unterminated string constant. (21:46)\n\n  19 |     /* test('should complete full login flow and display success state', async ({ page }) => {\n  20 |       // Mock successful magic link sending\n> 21 |       await page.route('**/api/auth/magic-link', async (route) => {\n     |                                               ^\n  22 |         await route.fulfill({\n  23 |           status: 200,\n  24 |           contentType: 'application/json',",
+      "stack": "SyntaxError: /Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests/auth-login-logout-flow.spec.ts: Unterminated string constant. (21:46)\n\n  19 |     /* test('should complete full login flow and display success state', async ({ page }) => {\n  20 |       // Mock successful magic link sending\n> 21 |       await page.route('**/api/auth/magic-link', async (route) => {\n     |                                               ^\n  22 |         await route.fulfill({\n  23 |           status: 200,\n  24 |           contentType: 'application/json',",
+      "location": {
+        "file": "/Users/kshitij/Documents/Everything Vibe coding/teacher-support-claude/e2e/tests/auth-login-logout-flow.spec.ts",
+        "line": 21,
+        "column": 46
+      },
+      "snippet": "\u001b[90m   at \u001b[39mauth-login-logout-flow.spec.ts:21\n\n  19 |     /* test('should complete full login flow and display success state', async ({ page }) => {\n  20 |       // Mock successful magic link sending\n> 21 |       await page.route('**/api/auth/magic-link', async (route) => {\n     |                                              ^\n  22 |         await route.fulfill({\n  23 |           status: 200,\n  24 |           contentType: 'application/json',"
+    }
+  ],
+  "stats": {
+    "startTime": "2025-08-08T08:47:52.973Z",
+    "duration": 120.15299999999996,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
